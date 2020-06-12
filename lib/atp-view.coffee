@@ -1386,7 +1386,9 @@ class ATPOutputView extends View
 
   getCwd: ->
     if not atom.project?
-      return null
+      return @userHome
+    if not atom.project.getPaths()[0]?
+      return @userHome
     extFile = extname atom.project.getPaths()[0]
 
     if extFile == ""

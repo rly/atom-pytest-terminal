@@ -1,4 +1,8 @@
 ###
+  atom-pytest-terminal
+  Copyright by rly
+  MIT licensed
+
   Atom-terminal-panel
   Copyright by isis97
   MIT licensed
@@ -30,7 +34,7 @@ include 'jquery-autocomplete-js'
 module.exports =
 class ATPOutputView extends View
   cwd: null
-  streamsEncoding : '"'+atom.config.get('atom-terminal-panel.textEncode')+'"'
+  streamsEncoding : '"'+atom.config.get('atom-pytest-terminal.textEncode')+'"'
   _cmdintdel: 50
   echoOn: true
   redirectOutput: ''
@@ -128,7 +132,7 @@ class ATPOutputView extends View
 
   showSettings: () ->
     setTimeout () =>
-      panelPath = atom.packages.resolvePackagePath 'atom-terminal-panel'
+      panelPath = atom.packages.resolvePackagePath 'atom-pytest-terminal'
       atomPath = resolve panelPath+'/../..'
       configPath = atomPath + '/terminal-commands.json'
       atom.workspace.open configPath
@@ -184,7 +188,7 @@ class ATPOutputView extends View
       dropDownWidth: '30%'
       dropDownDescriptionBoxWidth: '30%'
       dropDownPosition: 'top'
-      showDropDown: atom.config.get 'atom-terminal-panel.enableConsoleSuggestionsDropdown'
+      showDropDown: atom.config.get 'atom-pytest-terminal.enableConsoleSuggestionsDropdown'
     }
     @currentInputBoxCmp
     .confirmed(() =>
@@ -261,7 +265,7 @@ class ATPOutputView extends View
     if not location?
       return
     location = resolve location
-    console.log ("Require atom-terminal-panel plugin CSS file: "+location+"\n") if atom.config.get('atom-terminal-panel.logConsole') or @specsMode
+    console.log ("Require atom-pytest-terminal plugin CSS file: "+location+"\n") if atom.config.get('atom-pytest-terminal.logConsole') or @specsMode
     $('head').append "<link rel='stylesheet' type='text/css' href='#{location}'/>"
 
   resolvePluginDependencies: (path, plugin) ->
@@ -290,7 +294,7 @@ class ATPOutputView extends View
     $('body').append(el)
     ###
 
-    @streamsEncoding = '"'+atom.config.get('atom-terminal-panel.textEncode')+'"'
+    @streamsEncoding = '"'+atom.config.get('atom-pytest-terminal.textEncode')+'"'
     lastY = -1
     mouseDown = false
     panelDraggingActive = false
@@ -310,12 +314,12 @@ class ATPOutputView extends View
         lastY = -1
 
     normalizedPath = require("path").join(__dirname, "../commands")
-    console.log ("Loading atom-terminal-panel plugins from the directory: "+normalizedPath+"\n") if atom.config.get('atom-terminal-panel.logConsole') or @specsMode
+    console.log ("Loading atom-pytest-terminal plugins from the directory: "+normalizedPath+"\n") if atom.config.get('atom-pytest-terminal.logConsole') or @specsMode
     fs.readdirSync(normalizedPath).forEach( (folder) =>
       fullpath = resolve "../commands/" +folder
-      console.log ("Require atom-terminal-panel plugin: "+folder+"\n") if atom.config.get('atom-terminal-panel.logConsole') or @specsMode
+      console.log ("Require atom-pytest-terminal plugin: "+folder+"\n") if atom.config.get('atom-pytest-terminal.logConsole') or @specsMode
       obj = require ("../commands/" +folder+"/index.coffee")
-      console.log "Plugin loaded." if atom.config.get('atom-terminal-panel.logConsole')
+      console.log "Plugin loaded." if atom.config.get('atom-pytest-terminal.logConsole')
       @resolvePluginDependencies fullpath, obj
       for key, value of obj
         if value.command?
@@ -326,7 +330,7 @@ class ATPOutputView extends View
           value.name = key
           ATPVariablesBuiltins.putVariable value
     )
-    console.log ("All plugins were loaded.") if atom.config.get('atom-terminal-panel.logConsole')
+    console.log ("All plugins were loaded.") if atom.config.get('atom-pytest-terminal.logConsole')
 
     if ATPCore.getConfig()?
       actions = ATPCore.getConfig().actions
@@ -334,19 +338,19 @@ class ATPOutputView extends View
         for action in actions
           if action.length > 1
             obj = {}
-            obj['atom-terminal-panel:'+action[0]] = () =>
+            obj['atom-pytest-terminal:'+action[0]] = () =>
               @open()
               @onCommand action[1]
             atom.commands.add 'atom-workspace', obj
 
     # add actions for local commands if specified
     # command body should have key "action": action_name
-    # then keymap can have key-combo: atom-terminal-panel:action_name
+    # then keymap can have key-combo: atom-pytest-terminal:action_name
     for cmd_name, cmd_body of @localCommands
       action = cmd_body.action
       if action?
         obj = {}
-        obj['atom-terminal-panel:'+action] = (() =>
+        obj['atom-pytest-terminal:'+action] = (() =>
           cmd_name2 = cmd_name  # inner scoped variable
           return () =>
             @open()
@@ -398,7 +402,7 @@ class ATPOutputView extends View
       return ATPVariablesBuiltins.parse(this, prompt, values)
 
   getCommandPrompt: (cmd) ->
-    return @parseTemplate atom.config.get('atom-terminal-panel.commandPrompt'), {cmd: cmd}, true
+    return @parseTemplate atom.config.get('atom-pytest-terminal.commandPrompt'), {cmd: cmd}, true
 
   delay: (callback, delay=100) ->
     setTimeout callback, delay
@@ -588,7 +592,7 @@ class ATPOutputView extends View
           return null
         return ret
       else
-        if atom.config.get('atom-terminal-panel.enableExtendedCommands') or @specsMode
+        if atom.config.get('atom-pytest-terminal.enableExtendedCommands') or @specsMode
           if @isCommandEnabled(cmd)
             command = @getLocalCommand(cmd)
         if command?
@@ -613,7 +617,7 @@ class ATPOutputView extends View
           return null
 
   isCommandEnabled: (name) ->
-    disabledCommands = atom.config.get('atom-terminal-panel.disabledExtendedCommands') or @specsMode
+    disabledCommands = atom.config.get('atom-pytest-terminal.disabledExtendedCommands') or @specsMode
     if not disabledCommands?
       return true
     if name in disabledCommands
@@ -665,7 +669,7 @@ class ATPOutputView extends View
 
     cmd_ = []
     cmd_len = cmd.length
-    cmd_forbd = (atom.config.get 'atom-terminal-panel.disabledExtendedCommands') or []
+    cmd_forbd = (atom.config.get 'atom-pytest-terminal.disabledExtendedCommands') or []
     for cmd_item in cmd
       if cmd_item.name in cmd_forbd
       else
@@ -737,7 +741,7 @@ class ATPOutputView extends View
     if not forceShow
       if @helloMessageShown
         return
-    if atom.config.get 'atom-terminal-panel.enableConsoleStartupInfo' or forceShow or (not @specsMode)
+    if atom.config.get 'atom-pytest-terminal.enableConsoleStartupInfo' or forceShow or (not @specsMode)
       changelog_path = require("path").join(__dirname, "../CHANGELOG.md");
       readme_path = require("path").join(__dirname, "../README.md");
       hello_message = @consolePanel 'ATOM Terminal', 'Please enter new commands to the box below. (ctrl-to show suggestions dropdown)<br>The console supports special annotation like: %(path), %(file), %(link)file.something%(endlink).<br>It also supports special HTML elements like: %(tooltip:A:content:B) and so on.<br>Hope you\'ll enjoy the terminal.'+
@@ -810,7 +814,7 @@ class ATPOutputView extends View
     @putInputBox()
 
   setMaxWindowHeight: ->
-    maxHeight = atom.config.get('atom-terminal-panel.WindowHeight')
+    maxHeight = atom.config.get('atom-pytest-terminal.WindowHeight')
     @cliOutput.css("max-height", "#{maxHeight}px")
     $('.terminal-input').css("max-height", "#{maxHeight}px")
 
@@ -883,9 +887,9 @@ class ATPOutputView extends View
     @cliOutput.height (@cliOutput.height()+9999)
 
   open: ->
-    if (atom.config.get('atom-terminal-panel.moveToCurrentDirOnOpen')) and (not @specsMode)
+    if (atom.config.get('atom-pytest-terminal.moveToCurrentDirOnOpen')) and (not @specsMode)
       @moveToCurrentDirectory()
-    if (atom.config.get('atom-terminal-panel.moveToCurrentDirOnOpenLS')) and (not @specsMode)
+    if (atom.config.get('atom-pytest-terminal.moveToCurrentDirOnOpenLS')) and (not @specsMode)
       @clear()
       @execDelayedCommand @_cmdintdel, 'ls', null, this
 
@@ -911,7 +915,7 @@ class ATPOutputView extends View
     atom.tooltips.add @reloadConfigBtn,
      title: 'Reload the terminal configuration.'
 
-    if atom.config.get 'atom-terminal-panel.enableWindowAnimations'
+    if atom.config.get 'atom-pytest-terminal.enableWindowAnimations'
       @WindowMinHeight = @cliOutput.height() + 50
       @height 0
       @consoleToolbarHeading.css {opacity: 0}
@@ -925,7 +929,7 @@ class ATPOutputView extends View
           @consoleToolbarHeading.attr 'style', ''
 
   close: ->
-    if atom.config.get 'atom-terminal-panel.enableWindowAnimations'
+    if atom.config.get 'atom-pytest-terminal.enableWindowAnimations'
       @WindowMinHeight = @cliOutput.height() + 50
       @height @WindowMinHeight
       @animate {
@@ -975,7 +979,7 @@ class ATPOutputView extends View
     catch e
       return false
 
-    if atom.config.get('atom-terminal-panel.XExperimentEnableForceLinking')
+    if atom.config.get('atom-pytest-terminal.XExperimentEnableForceLinking')
       ret = ''
       files.forEach (filename) =>
         ret += @resolvePath filename + '\t%(break)'
@@ -1006,13 +1010,13 @@ class ATPOutputView extends View
   parseSpecialNodes: () ->
     caller = this
 
-    if atom.config.get 'atom-terminal-panel.enableConsoleInteractiveHints'
+    if atom.config.get 'atom-pytest-terminal.enableConsoleInteractiveHints'
       $('.atp-tooltip[data-toggle="tooltip"]').each(() ->
           title = $(this).attr('title')
           atom.tooltips.add $(this), {}
       )
 
-    if atom.config.get 'atom-terminal-panel.enableConsoleInteractiveLinks'
+    if atom.config.get 'atom-pytest-terminal.enableConsoleInteractiveLinks'
       @find('.console-link').each (
         () ->
           el = $(this)
@@ -1075,7 +1079,7 @@ class ATPOutputView extends View
     return text
 
   consoleLabel: (type, text) ->
-    if (not atom.config.get 'atom-terminal-panel.enableConsoleLabels') and (not @specsMode)
+    if (not atom.config.get 'atom-pytest-terminal.enableConsoleLabels') and (not @specsMode)
       return text
 
     if not text?
@@ -1100,7 +1104,7 @@ class ATPOutputView extends View
     return '<span class="label label-default">'+text+'</span>'
 
   consoleLink: (name, forced=true) ->
-    if (atom.config.get 'atom-terminal-panel.XExperimentEnableForceLinking') and (not forced)
+    if (atom.config.get 'atom-pytest-terminal.XExperimentEnableForceLinking') and (not forced)
       return name
     return @_fileInfoHtml(name, @getCwd(), 'font', false)[0]
 
@@ -1133,7 +1137,7 @@ class ATPOutputView extends View
     classes = []
     dataname = ''
 
-    if atom.config.get('atom-terminal-panel.useAtomIcons')
+    if atom.config.get('atom-pytest-terminal.useAtomIcons')
       classes.push 'name'
       classes.push 'icon'
       dataname = filepath
@@ -1151,7 +1155,7 @@ class ATPOutputView extends View
         file_exists = false
 
     if file_exists
-      if atom.config.get('atom-terminal-panel.enableConsoleInteractiveLinks') or @specsMode
+      if atom.config.get('atom-pytest-terminal.enableConsoleInteractiveLinks') or @specsMode
         classes.push 'console-link'
       if stat.isSymbolicLink()
         classes.push 'stat-link'
@@ -1236,40 +1240,40 @@ class ATPOutputView extends View
     if message == null
       return ''
     if matchSpec
-      if atom.config.get('atom-terminal-panel.XExperimentEnableForceLinking')
-        if atom.config.get('atom-terminal-panel.textReplacementFileAdress')?
-          if atom.config.get('atom-terminal-panel.textReplacementFileAdress') != ''
+      if atom.config.get('atom-pytest-terminal.XExperimentEnableForceLinking')
+        if atom.config.get('atom-pytest-terminal.textReplacementFileAdress')?
+          if atom.config.get('atom-pytest-terminal.textReplacementFileAdress') != ''
             # regex = /(([A-Za-z]:)(\\|\/))?([A-Za-z$\*\-+&#@!_\.]+(\\|\/))([A-Za-z $\*\-+&#@!_\.]+(\\|\/))*[A-Za-z\-_$\*\+&\^@#\. ]+\.[A-Za-z\-_$\*\+]*/ig
             # regex = /(([A-Za-z]:)(\\|\/))?(([^\s#@$%&!;<>\.\^:]| )+(\\|\/))((([^\s#@$%&!;<>\.\^:]| )+(\\|\/))*([^\s<>:#@$%\^;]| )+(\.([^\s#@$%&!;<>\.0-9:\^]| )*)*)?/ig
             regex = /(\.(\\|\/))?(([A-Za-z]:)(\\|\/))?(([^\s#@$%&!;<>\.\^:]| )+(\\|\/))((([^\s#@$%&!;<>\.\^:]| )+(\\|\/))*([^\s<>:#@$%\^;]| )+(\.([^\s#@$%&!;<>\.0-9:\^]| )*)*)?/ig
             regex2 = /(\.(\\|\/))((([^\s#@$%&!;<>\.\^:]| )+(\\|\/))*([^\s<>:#@$%\^;]| )+(\.([^\s#@$%&!;<>\.0-9:\^]| )*)*)?/ig
             message = message.replace regex, (match, text, urlId) =>
-              return @parseSpecialStringTemplate atom.config.get('atom-terminal-panel.textReplacementFileAdress'), {file:match}
+              return @parseSpecialStringTemplate atom.config.get('atom-pytest-terminal.textReplacementFileAdress'), {file:match}
             message = message.replace regex2, (match, text, urlId) =>
-              return @parseSpecialStringTemplate atom.config.get('atom-terminal-panel.textReplacementFileAdress'), {file:match}
+              return @parseSpecialStringTemplate atom.config.get('atom-pytest-terminal.textReplacementFileAdress'), {file:match}
       else
-        if atom.config.get('atom-terminal-panel.textReplacementFileAdress')?
-          if atom.config.get('atom-terminal-panel.textReplacementFileAdress') != ''
+        if atom.config.get('atom-pytest-terminal.textReplacementFileAdress')?
+          if atom.config.get('atom-pytest-terminal.textReplacementFileAdress') != ''
             #regex = /(([A-Za-z]:)(\\|\/))?([A-Za-z$\*\-+&#@!_\.]+(\\|\/))([A-Za-z $\*\-+&#@!_\.]+(\\|\/))*[A-Za-z\-_$\*\+&\^@#\. ]+\.[A-Za-z\-_$\*\+]*/ig
             cwdN = @getCwd()
             cwdE = @util.replaceAll '/', '\\', @getCwd()
             regexString ='(' + (@util.escapeRegExp cwdN) + '|' + (@util.escapeRegExp cwdE) + ')\\\\([^\\s:#$%^&!:]| )+\\.?([^\\s:#$@%&\\*\\^!0-9:\\.+\\-,\\\\\\/\"]| )*'
             regex = new RegExp(regexString, 'ig')
             message = message.replace regex, (match, text, urlId) =>
-              return @parseSpecialStringTemplate atom.config.get('atom-terminal-panel.textReplacementFileAdress'), {file:match}
-      if atom.config.get('atom-terminal-panel.textReplacementCurrentFile')?
-        if atom.config.get('atom-terminal-panel.textReplacementCurrentFile') != ''
+              return @parseSpecialStringTemplate atom.config.get('atom-pytest-terminal.textReplacementFileAdress'), {file:match}
+      if atom.config.get('atom-pytest-terminal.textReplacementCurrentFile')?
+        if atom.config.get('atom-pytest-terminal.textReplacementCurrentFile') != ''
           path = @getCurrentFilePath()
           regex = new RegExp @util.escapeRegExp(path), 'g'
           message = message.replace regex, (match, text, urlId) =>
-            return @parseSpecialStringTemplate atom.config.get('atom-terminal-panel.textReplacementCurrentFile'), {file:match}
+            return @parseSpecialStringTemplate atom.config.get('atom-pytest-terminal.textReplacementCurrentFile'), {file:match}
       message = @preserveOriginalPaths message
-      if atom.config.get('atom-terminal-panel.textReplacementCurrentPath')?
-        if atom.config.get('atom-terminal-panel.textReplacementCurrentPath') != ''
+      if atom.config.get('atom-pytest-terminal.textReplacementCurrentPath')?
+        if atom.config.get('atom-pytest-terminal.textReplacementCurrentPath') != ''
           path = @getCwd()
           regex = new RegExp @util.escapeRegExp(path), 'g'
           message = message.replace regex, (match, text, urlId) =>
-            return @parseSpecialStringTemplate atom.config.get('atom-terminal-panel.textReplacementCurrentPath'), {file:match}
+            return @parseSpecialStringTemplate atom.config.get('atom-pytest-terminal.textReplacementCurrentPath'), {file:match}
 
 
     message = @util.replaceAll '%(file-original)', @getCurrentFilePath(), message
@@ -1389,6 +1393,7 @@ class ATPOutputView extends View
       return @userHome
     if not atom.project.getPaths()[0]?
       return @userHome
+    console.log('extname ' + atom.project.getPaths()[0])
     extFile = extname atom.project.getPaths()[0]
 
     if extFile == ""
@@ -1430,7 +1435,7 @@ class ATPOutputView extends View
       instance.scrollToBottom()
 
     processCallback = (error, stdout, stderr) ->
-      console.log 'callback' if atom.config.get('atom-terminal-panel.logConsole') or @specsMode
+      console.log 'callback' if atom.config.get('atom-pytest-terminal.logConsole') or @specsMode
       instance.putInputBox()
       instance.showCmd()
 
@@ -1439,7 +1444,7 @@ class ATPOutputView extends View
     htmlStream.on 'data', dataCallback
     try
       @program = exec inputCmd, stdio: 'pipe', env: process.env, cwd: @getCwd(), processCallback
-      console.log @program if atom.config.get('atom-terminal-panel.logConsole') or @specsMode
+      console.log @program if atom.config.get('atom-pytest-terminal.logConsole') or @specsMode
       @program.stdout.setEncoding 'base64'
       (@program.stdout.pipe iconv.encodeStream 'base64').pipe htmlStream
 
@@ -1447,7 +1452,7 @@ class ATPOutputView extends View
       @statusIcon.addClass 'status-running'
       @killBtn.removeClass 'hide'
       @program.on 'exit', (code, signal) =>
-        console.log 'exit', code, signal if atom.config.get('atom-terminal-panel.logConsole') or @specsMode
+        console.log 'exit', code, signal if atom.config.get('atom-pytest-terminal.logConsole') or @specsMode
         @killBtn.addClass 'hide'
         @statusIcon.removeClass 'status-running'
         if code == 0
@@ -1460,7 +1465,7 @@ class ATPOutputView extends View
         @program = null
         @spawnProcessActive = false
       @program.on 'error', (err) =>
-        console.log 'error' if atom.config.get('atom-terminal-panel.logConsole') or @specsMode
+        console.log 'error' if atom.config.get('atom-pytest-terminal.logConsole') or @specsMode
         @message (err.message)
         @message '\n'
         @putInputBox()
@@ -1470,11 +1475,11 @@ class ATPOutputView extends View
         @flashIconClass 'status-info'
         @statusIcon.removeClass 'status-error'
       @program.stderr.on 'data', (data) =>
-        console.log 'stderr' if atom.config.get('atom-terminal-panel.logConsole') or @specsMode
+        console.log 'stderr' if atom.config.get('atom-pytest-terminal.logConsole') or @specsMode
         @message data
         @flashIconClass 'status-error', 300
 
     catch err
-      console.log 'Failed to launch process' if atom.config.get('atom-terminal-panel.logConsole') or @specsMode
+      console.log 'Failed to launch process' if atom.config.get('atom-pytest-terminal.logConsole') or @specsMode
       @message (err.message)
       @showCmd()

@@ -1,8 +1,8 @@
-
+<!--
 ![Shields.io badge](https://img.shields.io/apm/v/atom-terminal-panel.svg?style=flat-square)
 ![Shields.io badge](https://img.shields.io/apm/dm/atom-terminal-panel.svg?style=flat-square)
 ![Shields.io badge](https://img.shields.io/apm/l/atom-terminal-panel.svg?style=flat-square)
-
+-->
 atom-pytest-terminal
 ==============
 
@@ -24,14 +24,14 @@ This fork is not ready for public usage yet.
 - Fixed bug on loading missing user config file in `ATPCore.init`
 - Fixed bug where empty command resulted in "The argument 'file' cannot be empty. Received ''"
 - Fixed bug where use of `extname` and `dirname` on non-strings is deprecated.
+- Renamed package and updated license
 
 **TODO**:
 - Print `pytest` results in color
 - If the cursor is on a method name, then pytest will run only on that method. If the cursor is in the method body, then pytest will run on the whole class
 - Shift-enter in terminal acts the same as enter and does not close the terminal
 - Consider stripping most functionality and leaving just pytest related ones because there would be fewer bugs, it would be easier to maintain, and it might load faster
-- Rename package
-- Update license
+- Add shields
 
 atom-terminal-panel
 ==============

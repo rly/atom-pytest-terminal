@@ -1,7 +1,7 @@
 
 
 
-describe "atom-terminal-panel Testing utils functionality", ->
+describe "atom-pytest-terminal Testing utils functionality", ->
 
   it "tests the \"utils\" module", ->
     require '../lib/atp-utils'

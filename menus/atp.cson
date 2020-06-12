@@ -1,5 +1,9 @@
 ###
-  Atom-terminal-panel
+  atom-pytest-terminal
+  Copyright by rly
+  MIT licensed
+
+  atom-pytest-terminal
   Copyright by isis97
   MIT licensed
 
@@ -7,15 +11,15 @@
 ###
 'context-menu':
   '.atp-panel-body': [
-    { 'label': 'Copy', 'command': 'atom-terminal-panel:context-copy-output-selection' }
-    { 'label': 'Copy and execute', 'command': 'atom-terminal-panel:context-copy-and-execute-output-selection' }
-    { 'label': 'Copy raw output', 'command': 'atom-terminal-panel:context-copy-raw-output' }
-    { 'label': 'Copy html-formatted output', 'command': 'atom-terminal-panel:context-copy-html-output' }
+    { 'label': 'Copy', 'command': 'atom-pytest-terminal:context-copy-output-selection' }
+    { 'label': 'Copy and execute', 'command': 'atom-pytest-terminal:context-copy-and-execute-output-selection' }
+    { 'label': 'Copy raw output', 'command': 'atom-pytest-terminal:context-copy-raw-output' }
+    { 'label': 'Copy html-formatted output', 'command': 'atom-pytest-terminal:context-copy-html-output' }
     {
       'label': 'Terminal'
       'submenu': [
-        { 'label': 'Hide', 'command': 'atom-terminal-panel:hide' }
-        { 'label': 'Close', 'command': 'atom-terminal-panel:destroy' }
+        { 'label': 'Hide', 'command': 'atom-pytest-terminal:hide' }
+        { 'label': 'Close', 'command': 'atom-pytest-terminal:destroy' }
       ]
     }
   ]
@@ -28,22 +32,22 @@
         {
           'label': 'Instance'
           'submenu': [
-            { 'label': 'Destroy current instance', 'command': 'atom-terminal-panel:destroy' }
-            { 'label': 'Toggle', 'command': 'atom-terminal-panel:toggle' }
-            { 'label': 'Previous instance', 'command': 'atom-terminal-panel:prev' }
-            { 'label': 'Next instance', 'command': 'atom-terminal-panel:next' }
-            { 'label': 'New instance', 'command': 'atom-terminal-panel:new' }
-            { 'label': 'Hide instance', 'command': 'atom-terminal-panel:hide' }
+            { 'label': 'Destroy current instance', 'command': 'atom-pytest-terminal:destroy' }
+            { 'label': 'Toggle', 'command': 'atom-pytest-terminal:toggle' }
+            { 'label': 'Previous instance', 'command': 'atom-pytest-terminal:prev' }
+            { 'label': 'Next instance', 'command': 'atom-pytest-terminal:next' }
+            { 'label': 'New instance', 'command': 'atom-pytest-terminal:new' }
+            { 'label': 'Hide instance', 'command': 'atom-pytest-terminal:hide' }
           ]
         }
         {
           'label': 'Configuration'
           'submenu': [
-            { 'label': 'Reload configuration', 'command': 'atom-terminal-panel:reload-config' }
-            { 'label': 'Open configuration file', 'command': 'atom-terminal-panel:open-config' }
+            { 'label': 'Reload configuration', 'command': 'atom-pytest-terminal:reload-config' }
+            { 'label': 'Open configuration file', 'command': 'atom-pytest-terminal:open-config' }
           ]
         }
-        { 'label': 'Show command finder', 'command': 'atom-terminal-panel:show-command-finder' }
+        { 'label': 'Show command finder', 'command': 'atom-pytest-terminal:show-command-finder' }
       ]
     ]
   }

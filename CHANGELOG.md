@@ -9,6 +9,7 @@
   - Fixed bug on loading missing user config file in `ATPCore.init`
   - Fixed bug where empty command resulted in "The argument 'file' cannot be empty. Received ''"
   - Fixed bug where use of `extname` and `dirname` on non-strings is deprecated.
+  - Renamed package and updated license
 
 
 ### Changelog from atom-terminal-panel

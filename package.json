@@ -2,7 +2,7 @@
   "name": "atom-pytest-terminal",
   "main": "./lib/atp",
   "version": "0.1.0",
-  "description": "An advanced ATOM terminal interface. Fork of awesome atom package - atom-terminal-panel",
+  "description": "Run pytest from an awesome terminal within Atom. Fork of awesome atom package - atom-terminal-panel",
   "repository": "https://github.com/rly/atom-pytest-terminal",
   "license": "MIT",
   "engines": {

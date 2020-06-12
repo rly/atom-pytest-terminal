@@ -1,4 +1,8 @@
 ###
+  atom-pytest-terminal
+  Copyright by rly
+  MIT licensed
+
   Atom-terminal-panel
   Copyright by isis97
   MIT licensed

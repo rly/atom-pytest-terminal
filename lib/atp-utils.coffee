@@ -1,4 +1,8 @@
 ###
+  atom-pytest-terminal
+  Copyright by rly
+  MIT licensed
+
   Atom-terminal-panel
   Copyright by isis97
   MIT licensed
@@ -14,7 +18,7 @@ global.include = (name) ->
     window.cliUtilsIncludeLog = []
   if not name?
     setTimeout () =>
-      atom.notifications.addError "atom-terminal-panel: Dependency error. Module with null-value name cannot be required."
+      atom.notifications.addError "atom-pytest-terminal: Dependency error. Module with null-value name cannot be required."
     , 500
     return
   if (name.indexOf 'atp-') == 0
@@ -30,7 +34,7 @@ global.include = (name) ->
       window.cliUtilsIncludeLog.push name
     try
       setTimeout () =>
-        atom.notifications.addError "atom-terminal-panel: Dependency error. Module ["+name+"] cannot be required."
+        atom.notifications.addError "atom-pytest-terminal: Dependency error. Module ["+name+"] cannot be required."
       , 500
     catch e2
     throw e

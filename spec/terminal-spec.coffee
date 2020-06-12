@@ -1,5 +1,5 @@
 
-describe "atom-terminal-panel Testing terminal functionality", ->
+describe "atom-pytest-terminal Testing terminal functionality", ->
 
   atp = null
   [activationPromise, workspaceElement] = []
@@ -62,12 +62,12 @@ describe "atom-terminal-panel Testing terminal functionality", ->
   t = null
   initTerm = () =>
     workspaceElement = atom.views.getView(atom.workspace)
-    activationPromise = atom.packages.activatePackage('atom-terminal-panel')
-    atp = atom.packages.getLoadedPackage('atom-terminal-panel').mainModule
+    activationPromise = atom.packages.activatePackage('atom-pytest-terminal')
+    atp = atom.packages.getLoadedPackage('atom-pytest-terminal').mainModule
     t = atp.getPanel().createCommandView()
 
   executeCommand = (name, callback) ->
-    atom.commands.dispatch(workspaceElement, 'atom-terminal-panel:'+name)
+    atom.commands.dispatch(workspaceElement, 'atom-pytest-terminal:'+name)
     waitsForPromise -> activationPromise
     runs(callback)
 

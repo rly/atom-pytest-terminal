@@ -13,4 +13,4 @@ module.exports =
         return state.exec "python -m pytest " + testfile, null, state
       else
         return (state.consoleLabel 'error', "error") + (state.consoleText 'error', "Cannot run py.test on non Python file")
-    "action": "pythontest"  # register command "atom-terminal-panel:pythontest" that can be used for keymapping
+    "action": "pythontest"  # register command "atom-pytest-terminal:pythontest" that can be used for keymapping

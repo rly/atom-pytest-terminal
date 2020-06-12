@@ -30,6 +30,8 @@ This fork is not ready for public usage yet. The project name is still atom-term
 - If the cursor is on a method name, then pytest will run only on that method. If the cursor is in the method body, then pytest will run on the whole class
 - Shift-enter in terminal acts the same as enter and does not close the terminal
 - Consider stripping most functionality and leaving just pytest related ones because there would be fewer bugs, it would be easier to maintain, and it might load faster
+- Rename package
+- Update license
 
 atom-terminal-panel
 ==============

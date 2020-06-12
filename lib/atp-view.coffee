@@ -1393,7 +1393,6 @@ class ATPOutputView extends View
       return @userHome
     if not atom.project.getPaths()[0]?
       return @userHome
-    console.log('extname ' + atom.project.getPaths()[0])
     extFile = extname atom.project.getPaths()[0]
 
     if extFile == ""

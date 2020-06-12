@@ -17,6 +17,7 @@ This fork is not ready for public usage yet.
 **Changes between rly/atom-pytest-panel and styczynski/atom-terminal-panel**:
 - Added `pythontest` command, `pytestmethod` variable, and keyboard shortcut (ctrl-alt-r) to run `pythontest`
   - Note: `python` and `pytest` must be installed in the environment from which Atom is called. If other Python modules need to be loaded for tests to run, they should also be installed in the environment from which Atom is called.
+  - The `pytest` command will also be copied to the clipboard so that it can be copied over to a separate terminal. 
 - Added ability for users to register command keys in atom workspace in local commands
 - Fixed output of console labeled text appearing after the next command line prompt appears
 - Changed console font size to 14px
@@ -32,6 +33,13 @@ This fork is not ready for public usage yet.
 - Shift-enter in terminal acts the same as enter and does not close the terminal
 - Consider stripping most functionality and leaving just pytest related ones because there would be fewer bugs, it would be easier to maintain, and it might load faster
 - Add shields
+- Add word wrap
+- Pressing control with "Enable the console suggestions list" option off should not shift the terminal
+- Print the pytest command to the terminal
+- Running pythontest should auto-save the current file
+- Git panel does not show unstaged changes when terminal is running...
+- Allow running of pdb
+- Launch an external terminal instance instead of the internal Atom terminal, where pdb can't be used.
 
 atom-terminal-panel
 ==============

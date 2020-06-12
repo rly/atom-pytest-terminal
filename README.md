@@ -8,6 +8,12 @@ atom-pytest-panel
 
 **Fork from awesome https://github.com/styczynski/atom-terminal-panel**
 
+## Description
+
+This Atom package opens a terminal in the text editor Atom. Besides many other features developed by others before me, it allows you to run [`pytest`](https://docs.pytest.org/en/stable/) on the Python unittest method or class that the cursor is on. Just press `ctrl-shift-r` to launch pytest. Press `shift-enter` to toggle the terminal.
+
+This fork is not ready for public usage yet. The project name is still atom-terminal-panel
+
 **Changes between rly/atom-pytest-panel and styczynski/atom-terminal-panel**:
 - Added `pythontest` command, `pytestmethod` variable, and keyboard shortcut (ctrl-alt-r) to run `pythontest`
   - Note: `python` and `pytest` must be installed in the environment from which Atom is called. If other Python modules need to be loaded for tests to run, they should also be installed in the environment from which Atom is called.

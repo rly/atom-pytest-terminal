@@ -1,4 +1,17 @@
 ## Changelog
+* v0.1.0 (upcoming)
+  - Added `pythontest` command, `pytestmethod` variable, and keyboard shortcut (ctrl-alt-r) to run `pythontest`
+  - Note: `python` and `pytest` must be installed in the environment from which Atom is called. If other Python modules need to be loaded for tests to run, they should also be installed in the environment from which Atom is called.
+  - Added ability for users to register command keys in atom workspace in local commands
+  - Fixed output of console labeled text appearing after the next command line prompt appears
+  - Changed console font size to 14px
+  - Fixed deprecated usage of `atom.workspaceView`
+  - Fixed bug on loading missing user config file in `ATPCore.init`
+  - Fixed bug where empty command resulted in "The argument 'file' cannot be empty. Received ''"
+  - Fixed bug where use of `extname` and `dirname` on non-strings is deprecated.
+
+
+### Changelog from atom-terminal-panel
 * v4.4.4
   * Added ability to use Atom icons instead of the terminal defaults
     * Works well with UI themes changing file icons!

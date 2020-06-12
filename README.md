@@ -23,7 +23,7 @@ This fork is not ready for public usage yet. The project name is still atom-term
 - Fixed deprecated usage of `atom.workspaceView`
 - Fixed bug on loading missing user config file in `ATPCore.init`
 - Fixed bug where empty command resulted in "The argument 'file' cannot be empty. Received ''"
-- Fixed bug where use of 'extname' and 'dirname' on non-strings is deprecated.
+- Fixed bug where use of `extname` and `dirname` on non-strings is deprecated.
 
 **TODO**:
 - Print `pytest` results in color

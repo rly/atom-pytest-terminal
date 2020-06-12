@@ -1,9 +1,9 @@
 {
-  "name": "atom-terminal-panel",
+  "name": "atom-pytest-terminal",
   "main": "./lib/atp",
-  "version": "4.4.4",
-  "description": "An advanced ATOM terminal interface. Fork of awesome atom package - terminal-panel",
-  "repository": "https://github.com/isis97/atom-terminal-panel",
+  "version": "0.1.0",
+  "description": "An advanced ATOM terminal interface. Fork of awesome atom package - atom-terminal-panel",
+  "repository": "https://github.com/rly/atom-pytest-terminal",
   "license": "MIT",
   "engines": {
     "atom": ">0.135.0"

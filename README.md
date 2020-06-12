@@ -3,6 +3,27 @@
 ![Shields.io badge](https://img.shields.io/apm/dm/atom-terminal-panel.svg?style=flat-square)
 ![Shields.io badge](https://img.shields.io/apm/l/atom-terminal-panel.svg?style=flat-square)
 
+atom-pytest-panel
+==============
+
+**Fork from awesome https://github.com/styczynski/atom-terminal-panel**
+
+**Changes between rly/atom-pytest-panel and styczynski/atom-terminal-panel**:
+- Added `pythontest` command, `pytestmethod` variable, and keyboard shortcut (ctrl-alt-r) to run `pythontest`
+  - Note: `python` and `pytest` must be installed in the environment from which Atom is called. If other Python modules need to be loaded for tests to run, they should also be installed in the environment from which Atom is called.
+- Added ability for users to register command keys in atom workspace in local commands
+- Fixed output of console labeled text appearing after the next command line prompt appears
+- Changed console font size to 14px
+- Fixed deprecated usage of `atom.workspaceView`
+- Fixed bug on loading missing user config file in `ATPCore.init`
+- Fixed bug where empty command resulted in "The argument 'file' cannot be empty. Received ''"
+
+**TODO**:
+- Print `pytest` results in color
+- If the cursor is on a method name, then pytest will run only on that method. If the cursor is in the method body, then pytest will run on the whole class
+- Shift-enter in terminal acts the same as enter and does not close the terminal
+- Consider stripping most functionality and leaving just pytest related ones because there would be fewer bugs, it would be easier to maintain, and it might load faster
+
 atom-terminal-panel
 ==============
 

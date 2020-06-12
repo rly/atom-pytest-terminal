@@ -339,6 +339,21 @@ class ATPOutputView extends View
               @onCommand action[1]
             atom.commands.add 'atom-workspace', obj
 
+    # add actions for local commands if specified
+    # command body should have key "action": action_name
+    # then keymap can have key-combo: atom-terminal-panel:action_name
+    for cmd_name, cmd_body of @localCommands
+      action = cmd_body.action
+      if action?
+        obj = {}
+        obj['atom-terminal-panel:'+action] = (() =>
+          cmd_name2 = cmd_name  # inner scoped variable
+          return () =>
+            @open()
+            @onCommand cmd_name2
+        )()
+        atom.commands.add 'atom-workspace', obj
+
     if atom.workspace?
       eleqr = atom.workspace.getActivePaneItem() ? atom.workspace
       eleqr = atom.views.getView(eleqr)
@@ -427,6 +442,53 @@ class ATPOutputView extends View
         return te.buffer.file
     return null
 
+  getTestUnderCursor: ()->
+    # based on https://github.com/pghilardi/atom-python-test
+    if not atom.workspace?
+      return null
+    editor = atom.workspace.getActiveTextEditor()
+    if not editor?
+      return null
+    buffer = if editor != null then editor.buffer else undefined
+    file = if buffer != null then buffer.file else undefined
+    filePath = if file != null then file.path else undefined
+    if not filePath? or not filePath.endsWith('.py')
+      return null
+    selectedText = editor.getSelectedText()
+    testLineNumber = editor.getCursorBufferPosition().row
+    testIndentation = editor.indentationForBufferRow(testLineNumber)
+    class_re = /class \w*\((\w*.*\w*)*\):/
+    buffer = editor.buffer
+    # Starts searching backwards from the test line until we find a class. This
+    # guarantee that the class is a Test class, not an utility one.
+    reversedLines = buffer.getLines().slice(0, testLineNumber).reverse()
+    i = 0
+    while i < reversedLines.length
+      endIndex = undefined
+      line = reversedLines[i]
+      isClassLine = line.startsWith('class')
+      classLineNumber = testLineNumber - i - 1
+      # We think that we have found a Test class, but this is guaranteed only if
+      # the test indentation is greater than the class indentation.
+      classIndentation = editor.indentationForBufferRow(classLineNumber)
+      # if startIndex != -1 and testIndentation > classIndentation
+      if isClassLine and testIndentation > classIndentation
+        if line.includes('(')
+          endIndex = line.indexOf('(')
+        else
+          endIndex = line.indexOf(':')
+        className = line.slice(6, endIndex)
+        filePath = filePath + '::' + className
+        break
+      i++
+    re = /test(\w*|\W*)/
+    content = editor.buffer.getLines()[testLineNumber]
+    endIndex = content.indexOf('(')
+    startIndex = content.search(re)
+    testName = content.slice(startIndex, endIndex)
+    if testName
+      filePath = filePath + '::' + testName
+    return filePath
 
   parseTemplate: (text, vars, isDOM=false) ->
     if not vars?
@@ -712,8 +774,13 @@ class ATPOutputView extends View
     @inputLine++
     inputCmd = @parseSpecialStringTemplate inputCmd
 
+    if inputCmd is ''
+      @putInputBox()
+      @showCmd()
+      return null
+
     if @echoOn
-      console.log 'echo-on'
+      console.log inputCmd
       #TODO: Repair!
       #@message "\n"+@getCommandPrompt(inputCmd)+" "+inputCmd+"\n", false
 
@@ -723,6 +790,8 @@ class ATPOutputView extends View
 
     if typeof ret is 'string'
       @message ret + '\n'
+      @putInputBox()
+      @showCmd()
 
     return null
 

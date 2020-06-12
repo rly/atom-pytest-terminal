@@ -17,6 +17,7 @@ atom-pytest-panel
 - Fixed deprecated usage of `atom.workspaceView`
 - Fixed bug on loading missing user config file in `ATPCore.init`
 - Fixed bug where empty command resulted in "The argument 'file' cannot be empty. Received ''"
+- Fixed bug where use of 'extname' and 'dirname' on non-strings is deprecated.
 
 **TODO**:
 - Print `pytest` results in color

@@ -10,7 +10,10 @@ module.exports =
     "command": (state, args)->
       testfile = state.parseTemplate "%(pytestmethod)"
       if testfile isnt "null" and testfile isnt ""
-        return state.exec "python -m pytest " + testfile, null, state
+        cmd = "python -m pytest " + testfile
+        atom.clipboard.write(cmd)
+        state.rawMessage cmd + '<br/>'
+        return state.exec cmd, null, state
       else
         return (state.consoleLabel 'error', "error") + (state.consoleText 'error', "Cannot run py.test on non Python file")
     "action": "pythontest"  # register command "atom-pytest-terminal:pythontest" that can be used for keymapping
